@@ -1,14 +1,13 @@
 import Notiflix from 'notiflix'
 import SlimSelect from 'slim-select'
 import {fetchBreeds, fetchCatByBreed} from './cat-api.js'
-
+import 'slim-select/dist/slimselect.css';
 const container = document.querySelector('.cat-info')
 const select = document.querySelector('.breed-select')
 const loadMsg = document.querySelector('.loader')
 
 select.addEventListener("change", onChange)
     select.style.display = "none"
-
 
 fetchBreeds()
     .then(response => {
