@@ -5,9 +5,8 @@ import 'slim-select/dist/slimselect.css';
 const container = document.querySelector('.cat-info')
 const select = document.querySelector('.breed-select')
 const loadMsg = document.querySelector('.loader')
-
 select.addEventListener("change", onChange)
-    select.style.display = "none"
+// select.style.display = "none"
 
 fetchBreeds()
     .then(response => {
@@ -15,7 +14,7 @@ fetchBreeds()
         loadMsg.style.display="none"
         select.insertAdjacentHTML("beforeend", createOptions(response))
         new SlimSelect({
-            select: select
+            select: '#single'
         })
     })
     .catch(error => {
@@ -27,11 +26,11 @@ fetchBreeds()
 function createOptions(value) {
     return value.map(({ id, name }) => {
         return `<option value="${id}">${name}</option>`
-      }).join('')
+    }).join('')
 }
 
 
-function onChange(event) {
+function onChange(event) {  
     loadMsg.style.display ="block"
     const selectedId = this.value
     select.style.display = "none"
@@ -39,15 +38,11 @@ function onChange(event) {
     fetchCatByBreed(selectedId)
         .then(cat => {
             loadMsg.style.display = "none"
-            // select.style.display = "block"
-            new SlimSelect({
-                select: select
-            })
             container.innerHTML=createArticle(cat)
         })
         .catch(error => {
             Notiflix.Notify.failure('Oops! Something went wrong! Try reloading the page!')
-    })
+        })
 }
 
 function createArticle(cat) {
